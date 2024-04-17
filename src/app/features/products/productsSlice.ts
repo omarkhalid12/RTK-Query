@@ -1,15 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IProduct } from "../../../interfaces";
 import axiosInstance from "../../../config/axios.config";
+import { RootState } from "../../store";
 
 interface ProductsState {
-  productList: IProduct[],
+  data: IProduct[],
   loading: boolean,
   error: null
 }
 
 const initialState: ProductsState = {
-  productList: [],
+  data: [],
   loading: true,
   error: null
 
@@ -33,21 +34,25 @@ const productsSlice = createSlice({
   reducers: {},
   extraReducers: {
     // ** Pending ..
+
     [`${getProductList.pending}`]: (state) => {
       state.loading = true
     },
     // ** Fulfilled ..
+
     [`${getProductList.fulfilled}`]: (state, action) => {
       state.loading = false
-      state.productList = action.payload
+      state.data = action.payload
     },
     // ** Rejected ..
+
     [`${getProductList.rejected}`]: (state, action) => {
       state.loading = false
-      state.productList = []
+      state.data = []
+      state.error = action.payload
     }
   }
 });
 
-
+export const productsSelector = ({products}: RootState)=> products
 export default productsSlice.reducer;
