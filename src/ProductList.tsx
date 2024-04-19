@@ -5,7 +5,7 @@ import { useGetProductListQuery } from "./app/features/products/productsSlice";
 
 const ProductList = () => {
 
-  const {isLoading, data, isError} = useGetProductListQuery()
+  const {isLoading, data, isError} = useGetProductListQuery({})
 
   console.log({isLoading, data, isError})
   if(isLoading) return <h3>Loading ...</h3>
